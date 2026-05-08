@@ -531,9 +531,9 @@ body {
 
   display: grid;
 
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: 1fr auto auto auto auto;
 
-  gap: 18px;
+  gap: 14px;
 
   align-items: center;
 
@@ -545,4 +545,103 @@ body {
 
 }
 
+.admin-form {
+
+  margin-top: 30px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+
+}
+
+.admin-form label {
+
+  font-weight: 700;
+
+  margin-top: 8px;
+
+}
+
+.admin-form input,
+
+.admin-form textarea {
+
+  padding: 12px 14px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 10px;
+
+  font-size: 16px;
+
+  font-family: Arial, sans-serif;
+
+}
+
+.admin-form textarea {
+
+  min-height: 100px;
+
+  resize: vertical;
+
+}
+
+.admin-button,
+
+.admin-item button,
+
+.secondary-button,
+
+.danger-button {
+
+  padding: 10px 16px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+}
+
+.admin-button,
+
+.admin-item button {
+
+  background: #1677ff;
+
+  color: white;
+
+}
+
+.secondary-button {
+
+  background: #e5e7eb;
+
+  color: #1f2937;
+
+}
+
+.danger-button {
+
+  background: #ef4444 !important;
+
+  color: white;
+
+}
+
+.admin-form-buttons {
+
+  display: flex;
+
+  gap: 12px;
+
+  margin-top: 14px;
+
+}
 }

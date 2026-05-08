@@ -26,7 +26,7 @@ import cmlLogo from "./assets/ourLogo.png";
 
 import customerLogo from "./assets/logo.png";
 
-const projects = [
+const initialProjects = [
 
   {
 
@@ -182,7 +182,7 @@ function LoadIndicator({
 
 }
 
-function Home() {
+function Home({projects}: any) {
 
   const navigate = useNavigate();
 
@@ -236,9 +236,9 @@ function Home() {
 
         {projects
 
-          .sort((a, b) => a.id - b.id)
+          .sort((a: any, b: any) => a.id - b.id)
 
-          .map((project) => (
+          .map((project: any) => (
 
             <div
 
@@ -309,11 +309,11 @@ function Home() {
 
 }
 
-function ProjectPage() {
+function ProjectPage({projects}: any) {
 
   const { id } = useParams();
 
-  const project = projects.find((p) => p.id === Number(id));
+  const project = projects.find((p: any) => p.id === Number(id));
 
   if (!project) return <h1>Проект не найден</h1>;
 
@@ -415,7 +415,7 @@ function ProjectPage() {
 
           <ul>
 
-            {project.employees.map((e, i) => (
+            {project.employees.map((e: string, i: number) => (
 
               <li key={i}>{e}</li>
 
@@ -427,7 +427,7 @@ function ProjectPage() {
 
           <ul className="tasks-simple">
 
-            {project.tasks.map((task, i) => (
+            {project.tasks.map((task: any, i: number) => (
 
               <li key={i}>
 
@@ -443,7 +443,7 @@ function ProjectPage() {
 
           <div className="gallery">
 
-            {project.gallery.map((img, i) => (
+            {project.gallery.map((img: string, i: number) => (
 
               <img
 
@@ -537,7 +537,77 @@ function ProjectPage() {
 
 }
 
-function AdminPage() {
+function AdminPage({ projects, setProjects }: any) {
+
+  const [editingProject, setEditingProject] = useState<any | null>(null);
+
+  function addNewProject() {
+
+    setEditingProject({
+
+      id: Date.now(),
+
+      title: "",
+
+      customer: "ГК Росатом",
+
+      department: "",
+
+      startDate: "",
+
+      endDate: "",
+
+      progress: 0,
+
+      price: "",
+
+      image: img1,
+
+      description: "",
+
+      employees: [],
+
+      tasks: [],
+
+      gallery: [],
+
+    });
+
+  }
+
+  function saveProject() {
+
+    if (!editingProject) return;
+
+    const exists = projects.some((p: any) => p.id === editingProject.id);
+
+    if (exists) {
+
+      setProjects(
+
+        projects.map((p: any) =>
+
+          p.id === editingProject.id ? editingProject : p
+
+        )
+
+      );
+
+    } else {
+
+      setProjects([...projects, editingProject]);
+
+    }
+
+    setEditingProject(null);
+
+  }
+
+  function deleteProject(id: number) {
+
+    setProjects(projects.filter((p: any) => p.id !== id));
+
+  }
 
   return (
 
@@ -552,8 +622,16 @@ function AdminPage() {
           <h1>Панель администратора</h1>
 
           <p>
-            Режим администратора
+
+            Режим редактирования карточек проектов. Доступ осуществляется по прямой ссылке /admin.
+
           </p>
+
+          <button className="admin-button" onClick={addNewProject}>
+
+            Добавить новый проект
+
+          </button>
 
           <h3>Проекты</h3>
 
@@ -561,23 +639,257 @@ function AdminPage() {
 
             {projects
 
-              .sort((a, b) => a.id - b.id)
+              .sort((a: any, b: any) => a.id - b.id)
 
-              .map((project) => (
+              .map((project: any) => (
 
                 <div className="admin-item" key={project.id}>
 
-                  <b>{project.title}</b>
+                  <b>{project.title || "Новый проект"}</b>
 
                   <span>{project.customer}</span>
 
                   <span>Прогресс: {project.progress}%</span>
+
+                  <button onClick={() => setEditingProject(project)}>
+
+                    Редактировать
+
+                  </button>
+
+                  <button
+
+                    className="danger-button"
+
+                    onClick={() => deleteProject(project.id)}
+
+                  >
+
+                    Удалить
+
+                  </button>
 
                 </div>
 
               ))}
 
           </div>
+
+          {editingProject && (
+
+            <div className="admin-form">
+
+              <h3>Редактирование проекта</h3>
+
+              <label>Название проекта</label>
+
+              <input
+
+                value={editingProject.title}
+
+                onChange={(e) =>
+
+                  setEditingProject({ ...editingProject, title: e.target.value })
+
+                }
+
+              />
+
+              <label>Заказчик</label>
+
+              <input
+
+                value={editingProject.customer}
+
+                onChange={(e) =>
+
+                  setEditingProject({ ...editingProject, customer: e.target.value })
+
+                }
+
+              />
+
+              <label>Отдел</label>
+
+              <input
+
+                value={editingProject.department}
+
+                onChange={(e) =>
+
+                  setEditingProject({ ...editingProject, department: e.target.value })
+
+                }
+
+              />
+
+              <label>Дата начала</label>
+
+              <input
+
+                value={editingProject.startDate}
+
+                onChange={(e) =>
+
+                  setEditingProject({ ...editingProject, startDate: e.target.value })
+
+                }
+
+              />
+
+              <label>Дата окончания</label>
+
+              <input
+
+                value={editingProject.endDate}
+
+                onChange={(e) =>
+
+                  setEditingProject({ ...editingProject, endDate: e.target.value })
+
+                }
+
+              />
+
+              <label>Прогресс</label>
+
+              <input
+
+                type="number"
+
+                min="0"
+
+                max="100"
+
+                value={editingProject.progress}
+
+                onChange={(e) =>
+
+                  setEditingProject({
+
+                    ...editingProject,
+
+                    progress: Number(e.target.value),
+
+                  })
+
+                }
+
+              />
+
+              <label>Стоимость</label>
+
+              <input
+
+                value={editingProject.price}
+
+                onChange={(e) =>
+
+                  setEditingProject({ ...editingProject, price: e.target.value })
+
+                }
+
+              />
+
+              <label>Описание</label>
+
+              <textarea
+
+                value={editingProject.description}
+
+                onChange={(e) =>
+
+                  setEditingProject({
+
+                    ...editingProject,
+
+                    description: e.target.value,
+
+                  })
+
+                }
+
+              />
+
+              <label>Сотрудники через запятую</label>
+
+              <input
+
+                value={editingProject.employees.join(", ")}
+
+                onChange={(e) =>
+
+                  setEditingProject({
+
+                    ...editingProject,
+
+                    employees: e.target.value
+
+                      .split(",")
+
+                      .map((item) => item.trim())
+
+                      .filter(Boolean),
+
+                  })
+
+                }
+
+              />
+
+              <label>Задачи через запятую</label>
+
+              <input
+
+                value={editingProject.tasks.map((task: any) => task.name).join(", ")}
+
+                onChange={(e) =>
+
+                  setEditingProject({
+
+                    ...editingProject,
+
+                    tasks: e.target.value
+
+                      .split(",")
+
+                      .map((item) => item.trim())
+
+                      .filter(Boolean)
+
+                      .map((name) => ({ name, progress: 0 })),
+
+                  })
+
+                }
+
+              />
+
+              <div className="admin-form-buttons">
+
+                <button className="admin-button" onClick={saveProject}>
+
+                  Сохранить
+
+                </button>
+
+                <button
+
+                  className="secondary-button"
+
+                  onClick={() => setEditingProject(null)}
+
+                >
+
+                  Отмена
+
+                </button>
+
+              </div>
+
+            </div>
+
+          )}
 
         </div>
 
@@ -591,15 +903,41 @@ function AdminPage() {
 
 function App() {
 
+  const [projects, setProjects] = useState(() => {
+
+    const savedProjects = localStorage.getItem("projects");
+
+    if (savedProjects) {
+
+      return JSON.parse(savedProjects);
+
+    }
+
+    return initialProjects;
+
+  });
+
+  useEffect(() => {
+
+    localStorage.setItem("projects", JSON.stringify(projects));
+
+  }, [projects]);
+
   return (
 
     <Routes>
 
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Home projects={projects} />} />
 
-      <Route path="/project/:id" element={<ProjectPage />} />
+      <Route path="/project/:id" element={<ProjectPage projects={projects} />} />
 
-      <Route path="/admin" element={<AdminPage />} />
+      <Route
+
+        path="/admin"
+
+        element={<AdminPage projects={projects} setProjects={setProjects} />}
+
+      />
 
     </Routes>
 
