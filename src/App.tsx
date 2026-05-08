@@ -315,7 +315,53 @@ function ProjectPage() {
 
   const project = projects.find((p) => p.id === Number(id));
 
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  if (!project) return <h1>Проект не найден</h1>;
+
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+
+      if (selectedImageIndex === null) return;
+
+      if (event.key === "ArrowRight") {
+
+        setSelectedImageIndex((selectedImageIndex + 1) % project.gallery.length);
+
+      }
+
+      if (event.key === "ArrowLeft") {
+
+        setSelectedImageIndex(
+
+          selectedImageIndex === 0
+
+            ? project.gallery.length - 1
+
+            : selectedImageIndex - 1
+
+        );
+
+      }
+
+      if (event.key === "Escape") {
+
+        setSelectedImageIndex(null);
+
+      }
+
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+
+      window.removeEventListener("keydown", handleKeyDown);
+
+    };
+
+  }, [selectedImageIndex, project.gallery.length]);
 
   if (!project) return <h1>Проект не найден</h1>;
 
@@ -409,7 +455,7 @@ function ProjectPage() {
 
                 alt={`Фото ${i + 1}`}
 
-                onClick={() => setSelectedImage(img)}
+                onClick={() => setSelectedImageIndex(i)}
 
               />
 
@@ -421,11 +467,67 @@ function ProjectPage() {
 
       </div>
 
-      {selectedImage && (
+      {selectedImageIndex !== null && (
 
-        <div className="modal" onClick={() => setSelectedImage(null)}>
+        <div className="modal" onClick={() => setSelectedImageIndex(null)}>
 
-          <img src={selectedImage} alt="Просмотр" />
+          <button
+
+            className="modal-arrow modal-arrow-left"
+
+            onClick={(event) => {
+
+              event.stopPropagation();
+
+              setSelectedImageIndex(
+
+                selectedImageIndex === 0
+
+                  ? project.gallery.length - 1
+
+                  : selectedImageIndex - 1
+
+              );
+
+            }}
+
+          >
+
+            ‹
+
+          </button>
+
+          <img
+
+            src={project.gallery[selectedImageIndex]}
+
+            alt="Просмотр"
+
+            onClick={(event) => event.stopPropagation()}
+
+          />
+
+          <button
+
+            className="modal-arrow modal-arrow-right"
+
+            onClick={(event) => {
+
+              event.stopPropagation();
+
+              setSelectedImageIndex(
+
+                (selectedImageIndex + 1) % project.gallery.length
+
+              );
+
+            }}
+
+          >
+
+            ›
+
+          </button>
 
         </div>
 
