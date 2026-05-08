@@ -575,6 +575,22 @@ function AdminPage({ projects, setProjects }: any) {
 
   }
 
+  async function changeCustomerLogo(file: File | null) {
+
+    if (!file || !editingProject) return;
+
+    const logo = await fileToBase64(file);
+
+    setEditingProject({
+
+      ...editingProject,
+
+      customerLogo: logo,
+
+    });
+
+  }
+
   async function addGalleryImages(files: FileList | null) {
 
     if (!files || !editingProject) return;
@@ -595,6 +611,7 @@ function AdminPage({ projects, setProjects }: any) {
 
   }
 
+
   function addNewProject() {
 
     setEditingProject({
@@ -603,7 +620,9 @@ function AdminPage({ projects, setProjects }: any) {
 
       title: "",
 
-      customer: "ГК Росатом",
+      customer: "",
+
+      customerLogo: "",
 
       department: "",
 
@@ -615,7 +634,7 @@ function AdminPage({ projects, setProjects }: any) {
 
       price: "",
 
-      image: img1,
+      image: "",
 
       description: "",
 
@@ -760,6 +779,18 @@ function AdminPage({ projects, setProjects }: any) {
                   setEditingProject({ ...editingProject, customer: e.target.value })
 
                 }
+
+              />
+
+              <label>Логотип заказчика</label>
+
+              <input
+
+                type="file"
+
+                accept="image/*"
+
+                onChange={(e) => changeCustomerLogo(e.target.files?.[0] || null)}
 
               />
 
