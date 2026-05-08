@@ -890,6 +890,24 @@ function AdminPage({ projects, setProjects }: any) {
 
               <label>Описание</label>
 
+              <textarea
+
+                value={editingProject.description}
+
+                onChange={(e) =>
+
+                  setEditingProject({
+
+                    ...editingProject,
+
+                    description: e.target.value,
+
+                  })
+
+                }
+
+              />
+
               <label>Основная фотография карточки</label>
 
               <input
@@ -958,23 +976,6 @@ function AdminPage({ projects, setProjects }: any) {
 
               </div>
 
-              <textarea
-
-                value={editingProject.description}
-
-                onChange={(e) =>
-
-                  setEditingProject({
-
-                    ...editingProject,
-
-                    description: e.target.value,
-
-                  })
-
-                }
-
-              />
 
               <label>Сотрудники</label>
 

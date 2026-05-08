@@ -545,50 +545,6 @@ body {
 
 }
 
-.admin-form {
-
-  margin-top: 30px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 12px;
-
-}
-
-.admin-form label {
-
-  font-weight: 700;
-
-  margin-top: 8px;
-
-}
-
-.admin-form input,
-
-.admin-form textarea {
-
-  padding: 12px 14px;
-
-  border: 1px solid #d1d5db;
-
-  border-radius: 10px;
-
-  font-size: 16px;
-
-  font-family: Arial, sans-serif;
-
-}
-
-.admin-form textarea {
-
-  min-height: 100px;
-
-  resize: vertical;
-
-}
-
 .admin-button,
 
 .admin-item button,
@@ -677,4 +633,47 @@ body {
 
   border-radius: 10px;
 }
+}
+.admin-form {
+
+  margin-top: 30px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+
+}
+
+.admin-form label {
+
+  font-weight: 700;
+
+  margin-top: 8px;
+
+}
+
+.admin-form input,
+
+.admin-form textarea {
+
+  padding: 12px 14px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 10px;
+
+  font-size: 16px;
+
+  font-family: Arial, sans-serif;
+
+}
+
+.admin-form textarea {
+
+  min-height: 100px;
+
+  resize: vertical;
+
 }
