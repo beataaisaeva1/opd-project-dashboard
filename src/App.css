@@ -161,7 +161,7 @@ body {
 }
 
 .card {
-  min-height: 560px;
+  min-height: 590px;
 
   background: white;
 
@@ -208,7 +208,7 @@ body {
 }
 
 .card h3 {
-  height: 58px;
+  min-height: 84px;
 
   margin: 0 0 14px;
 
@@ -216,7 +216,7 @@ body {
 
   line-height: 1.15;
 
-  overflow: hidden;
+  overflow: visible;
 
 }
 
