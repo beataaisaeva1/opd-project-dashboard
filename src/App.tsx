@@ -718,11 +718,23 @@ function AdminPage({ projects, setProjects }: any) {
 
                 <div className="admin-item" key={project.id}>
 
-                  <b>{project.title || "Новый проект"}</b>
+                  <div>
 
-                  <span>{project.customer}</span>
+                    <b>{project.title}</b>
 
-                  <span>Прогресс: {project.progress}%</span>
+                  </div>
+
+                  <div>
+
+                    {project.customer || "Без заказчика"}
+
+                  </div>
+
+                  <div>
+
+                    Прогресс: {project.progress}%
+
+                  </div>
 
                   <button onClick={() => setEditingProject(project)}>
 
@@ -903,6 +915,48 @@ function AdminPage({ projects, setProjects }: any) {
                 onChange={(e) => addGalleryImages(e.target.files)}
 
               />
+
+              <div className="admin-gallery-preview">
+
+                {editingProject.gallery.map((img: string, i: number) => (
+
+                  <div className="admin-gallery-item" key={i}>
+
+                    <img src={img} alt={`Фото ${i + 1}`} />
+
+                    <button
+
+                      type="button"
+
+                      className="danger-button"
+
+                      onClick={() =>
+
+                        setEditingProject({
+
+                          ...editingProject,
+
+                          gallery: editingProject.gallery.filter(
+
+                            (_: string, index: number) => index !== i
+
+                          ),
+
+                        })
+
+                      }
+
+                    >
+
+                      Удалить фото
+
+                    </button>
+
+                  </div>
+
+                ))}
+
+              </div>
 
               <textarea
 
