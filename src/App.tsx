@@ -182,7 +182,7 @@ function LoadIndicator({
 
 }
 
-function Home({projects}: any) {
+function Home({ projects }: any) {
 
   const navigate = useNavigate();
 
@@ -309,7 +309,7 @@ function Home({projects}: any) {
 
 }
 
-function ProjectPage({projects}: any) {
+function ProjectPage({ projects }: any) {
 
   const { id } = useParams();
 
@@ -540,6 +540,60 @@ function ProjectPage({projects}: any) {
 function AdminPage({ projects, setProjects }: any) {
 
   const [editingProject, setEditingProject] = useState<any | null>(null);
+
+  function fileToBase64(file: File) {
+
+    return new Promise<string>((resolve) => {
+
+      const reader = new FileReader();
+
+      reader.onload = () => {
+
+        resolve(reader.result as string);
+
+      };
+
+      reader.readAsDataURL(file);
+
+    });
+
+  }
+
+  async function changeMainImage(file: File | null) {
+
+    if (!file || !editingProject) return;
+
+    const image = await fileToBase64(file);
+
+    setEditingProject({
+
+      ...editingProject,
+
+      image: image,
+
+    });
+
+  }
+
+  async function addGalleryImages(files: FileList | null) {
+
+    if (!files || !editingProject) return;
+
+    const images = await Promise.all(
+
+      Array.from(files).map((file) => fileToBase64(file))
+
+    );
+
+    setEditingProject({
+
+      ...editingProject,
+
+      gallery: [...editingProject.gallery, ...images],
+
+    });
+
+  }
 
   function addNewProject() {
 
@@ -793,6 +847,32 @@ function AdminPage({ projects, setProjects }: any) {
 
               <label>Описание</label>
 
+              <label>Основная фотография карточки</label>
+
+              <input
+
+                type="file"
+
+                accept="image/*"
+
+                onChange={(e) => changeMainImage(e.target.files?.[0] || null)}
+
+              />
+
+              <label>Фотографии для галереи</label>
+
+              <input
+
+                type="file"
+
+                accept="image/*"
+
+                multiple
+
+                onChange={(e) => addGalleryImages(e.target.files)}
+
+              />
+
               <textarea
 
                 value={editingProject.description}
@@ -811,11 +891,11 @@ function AdminPage({ projects, setProjects }: any) {
 
               />
 
-              <label>Сотрудники через запятую</label>
+              <label>Сотрудники</label>
 
-              <input
+              <textarea
 
-                value={editingProject.employees.join(", ")}
+                value={editingProject.employees.join("\n")}
 
                 onChange={(e) =>
 
@@ -823,13 +903,7 @@ function AdminPage({ projects, setProjects }: any) {
 
                     ...editingProject,
 
-                    employees: e.target.value
-
-                      .split(",")
-
-                      .map((item) => item.trim())
-
-                      .filter(Boolean),
+                    employees: e.target.value.split("\n"),
 
                   })
 
@@ -837,11 +911,11 @@ function AdminPage({ projects, setProjects }: any) {
 
               />
 
-              <label>Задачи через запятую</label>
+              <label>Задачи</label>
 
-              <input
+              <textarea
 
-                value={editingProject.tasks.map((task: any) => task.name).join(", ")}
+                value={editingProject.tasks.map((task: any) => task.name).join("\n")}
 
                 onChange={(e) =>
 
@@ -851,11 +925,7 @@ function AdminPage({ projects, setProjects }: any) {
 
                     tasks: e.target.value
 
-                      .split(",")
-
-                      .map((item) => item.trim())
-
-                      .filter(Boolean)
+                      .split("\n")
 
                       .map((name) => ({ name, progress: 0 })),
 
