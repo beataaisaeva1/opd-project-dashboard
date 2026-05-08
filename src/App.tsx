@@ -373,8 +373,6 @@ function ProjectPage() {
 
       <div className="project-page">
 
-        <img className="project-main-image" src={project.image} alt={project.title} />
-
         <div className="project-info">
 
           <h1>{project.title}</h1>
