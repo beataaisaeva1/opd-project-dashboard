@@ -644,4 +644,39 @@ body {
   margin-top: 14px;
 
 }
+
+.admin-gallery-preview {
+
+  display: flex;
+
+  gap: 14px;
+
+  flex-wrap: wrap;
+
+  margin-top: 10px;
+
+}
+
+.admin-gallery-item {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+}
+
+.admin-gallery-item img {
+
+  width: 160px;
+
+  height: 100px;
+
+  object-fit: cover;
+
+  border-radius: 10px;
+
+}
+
 }
