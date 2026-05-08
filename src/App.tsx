@@ -537,6 +537,58 @@ function ProjectPage() {
 
 }
 
+function AdminPage() {
+
+  return (
+
+    <div className="app">
+
+      <Link to="/" className="back-link">← На главную</Link>
+
+      <div className="project-page">
+
+        <div className="project-info">
+
+          <h1>Панель администратора</h1>
+
+          <p>
+            Режим администратора
+          </p>
+
+          <h3>Проекты</h3>
+
+          <div className="admin-list">
+
+            {projects
+
+              .sort((a, b) => a.id - b.id)
+
+              .map((project) => (
+
+                <div className="admin-item" key={project.id}>
+
+                  <b>{project.title}</b>
+
+                  <span>{project.customer}</span>
+
+                  <span>Прогресс: {project.progress}%</span>
+
+                </div>
+
+              ))}
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  );
+
+}
+
 function App() {
 
   return (
@@ -546,6 +598,8 @@ function App() {
       <Route path="/" element={<Home />} />
 
       <Route path="/project/:id" element={<ProjectPage />} />
+
+      <Route path="/admin" element={<AdminPage />} />
 
     </Routes>
 
