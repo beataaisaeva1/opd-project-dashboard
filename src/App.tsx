@@ -740,13 +740,14 @@ function AdminPage({ projects, setProjects, loads, setLoads}: any) {
             />
           </div>
 
+
+          <h3>Проекты</h3>
+
           <button className="admin-button" onClick={addNewProject}>
 
             Добавить новый проект
 
           </button>
-
-          <h3>Проекты</h3>
 
           <div className="admin-list">
 

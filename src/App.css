@@ -570,7 +570,9 @@ body {
 
 }
 
-.admin-button,
+.admin-button{
+  margin: 12px 0 20px;
+}
 
 .admin-item button,
 
