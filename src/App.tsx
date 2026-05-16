@@ -739,11 +739,6 @@ function AdminPage({ projects, setProjects, loads, setLoads}: any) {
             }
             />
           </div>
-          <p>
-
-            Режим редактирования карточек проектов. Доступ осуществляется по прямой ссылке /admin.
-
-          </p>
 
           <button className="admin-button" onClick={addNewProject}>
 
