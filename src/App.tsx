@@ -265,7 +265,12 @@ function Home({ projects }: any) {
 
                   <div className="customer-row">
 
-                    <img src={customerLogo} alt="Логотип заказчика" />
+                    {project.customerLogo &&(
+                      <img
+                      src={project.customerLogo}
+                      alt="Логотип заказчика"
+                      />
+                    )}
 
                     <span>{project.customer}</span>
 
@@ -379,7 +384,12 @@ function ProjectPage({ projects }: any) {
 
           <div className="customer-row">
 
-            <img src={customerLogo} alt="Логотип заказчика" />
+            {project.customerLogo &&(
+                      <img
+                      src={project.customerLogo}
+                      alt="Логотип заказчика"
+                      />
+                    )}
 
             <span>{project.customer}</span>
 
@@ -909,6 +919,13 @@ function AdminPage({ projects, setProjects }: any) {
               />
 
               <label>Основная фотография карточки</label>
+              {editingProject.image && (
+                <img 
+                src={editingProject.image}
+                alt="Текущее фото"
+                className="admin-preview-image"
+                />
+                )}
 
               <input
 

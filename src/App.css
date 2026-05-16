@@ -204,7 +204,7 @@ body {
   padding: 20px;
   display: flex;
   flex-direction: column;
-
+  flex: 1;
 }
 
 .card h3 {
@@ -215,8 +215,10 @@ body {
   font-size: 22px;
 
   line-height: 1.15;
-
-  overflow: visible;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 
 }
 
@@ -238,7 +240,7 @@ body {
 
   gap: 8px;
 
-  margin: 0 0 14px;
+  margin-bottom: 14px;
 
 }
 
@@ -425,13 +427,36 @@ body {
 
 .modal img {
 
-  max-width: 90vw;
+  max-width: 80vw;
 
-  max-height: 90vh;
+  max-height: 80vh;
 
   border-radius: 16px;
 
   object-fit: contain;
+
+}
+
+.modal-arrow{
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.9);
+  font-size: 34px;
+  cursor: pointer;
+  z-index: 1200;
+}
+
+.modal-arrow-left {
+  left: 40px;
+}
+
+.modal-arrow-right {
+  right: 40px;
 
 }
 
@@ -632,6 +657,14 @@ body {
   object-fit: cover;
 
   border-radius: 10px;
+}
+
+.admin-preview-image {
+  width: 220px;
+  height: 140px;
+  object-fit: cover;
+  border-radius:12px;
+  margin-bottom:10px;
 }
 }
 .admin-form {
