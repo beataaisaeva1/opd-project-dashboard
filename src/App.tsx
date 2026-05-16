@@ -24,7 +24,7 @@ import digital2 from "./assets/digital2.jpg";
 
 import cmlLogo from "./assets/ourLogo.png";
 
-import customerLogo from "./assets/logo.png";
+//import customerLogo from "./assets/logo.png";
 
 const initialProjects = [
 
