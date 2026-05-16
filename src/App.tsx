@@ -36,6 +36,8 @@ const initialProjects = [
 
     customer: "ГК Росатом",
 
+    customerLogo: customerLogo,
+
     department: "Отдел промышленной робототехники",
 
     startDate: "01.01.2024",
@@ -76,6 +78,8 @@ const initialProjects = [
 
     customer: "ГК Росатом",
 
+    customerLogo: customerLogo,
+
     department: "Инженерный центр CML",
 
     startDate: "15.02.2024",
@@ -113,6 +117,8 @@ const initialProjects = [
     title: "Разработка цифровой системы мониторинга",
 
     customer: "ГК Росатом",
+
+    customerLogo: customerLogo,
 
     department: "Отдел цифровых решений",
 
@@ -265,7 +271,12 @@ function Home({ projects }: any) {
 
                   <div className="customer-row">
 
-                    <img src={customerLogo} alt="Логотип заказчика" />
+                    {project.customerLogo &&(
+                      <img
+                      src={project.customerLogo}
+                      alt="Логотип заказчика"
+                      />
+                      )}
 
                     <span>{project.customer}</span>
 
@@ -380,11 +391,11 @@ function ProjectPage({ projects }: any) {
           <div className="customer-row">
 
             {project.customerLogo &&(
-                      <img
-                      src={project.customerLogo}
-                      alt="Логотип заказчика"
-                      />
-                    )}
+              <img
+              src={project.customerLogo}
+              alt="Логотип заказчика"
+              />
+            )}
 
             <span>{project.customer}</span>
 
