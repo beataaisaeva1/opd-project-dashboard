@@ -710,6 +710,35 @@ function AdminPage({ projects, setProjects, loads, setLoads}: any) {
 
           <h1>Панель администратора</h1>
 
+          <h3>Загрузка системы</h3>
+          <div className="admin-form">
+            <label>Загрузка сотрудников, %</label>
+            <input
+            type="number"
+            min="0"
+            max="100"
+            value={loads.employees}
+            onChange={(e) =>
+              setLoads({
+                ...loads,
+              employees: Number(e.target.value),
+            })
+          }
+          />
+          <label>Загрузка вычислений, %</label>
+            <input
+            type="number"
+            min="0"
+            max="100"
+            value={loads.computing}
+            onChange={(e) =>
+              setLoads({
+                ...loads,
+                computing: Number(e.target.value),
+              })
+            }
+            />
+          </div>
           <p>
 
             Режим редактирования карточек проектов. Доступ осуществляется по прямой ссылке /admin.
@@ -721,36 +750,6 @@ function AdminPage({ projects, setProjects, loads, setLoads}: any) {
             Добавить новый проект
 
           </button>
-        
-        <h3>Загрузка системы</h3>
-        <div className="admin-form">
-          <label>Загрузка сотрудников, %</label>
-          <input
-          type="number"
-          min="0"
-          max="100"
-          value={loads.employees}
-          onChange={(e) =>
-            setLoads({
-              ...loads,
-              employees: Number(e.target.value),
-            })
-          }
-          />
-          <label>Загрузка вычислений, %</label>
-          <input
-          type="number"
-          min="0"
-          max="100"
-          value={loads.computing}
-          onChange={(e) =>
-            setLoads({
-              ...loads,
-              computing: Number(e.target.value),
-            })
-          }
-          />
-          </div>
 
           <h3>Проекты</h3>
 
