@@ -24,7 +24,7 @@ import digital2 from "./assets/digital2.jpg";
 
 import cmlLogo from "./assets/ourLogo.png";
 
-//import customerLogo from "./assets/logo.png";
+import customerLogo from "./assets/logo.png";
 
 const initialProjects = [
 
@@ -265,12 +265,7 @@ function Home({ projects }: any) {
 
                   <div className="customer-row">
 
-                    {project.customerLogo &&(
-                      <img
-                      src={project.customerLogo}
-                      alt="Логотип заказчика"
-                      />
-                    )}
+                    <img src={customerLogo} alt="Логотип заказчика" />
 
                     <span>{project.customer}</span>
 
