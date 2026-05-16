@@ -722,7 +722,7 @@ function AdminPage({ projects, setProjects, loads, setLoads}: any) {
 
           </button>
         
-        <h3>Загрузка ресурсов</h3>
+        <h3>Загрузка системы</h3>
         <div className="admin-form">
           <label>Загрузка сотрудников, %</label>
           <input
