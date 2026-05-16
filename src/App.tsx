@@ -1086,10 +1086,25 @@ function App() {
 
     const savedProjects = localStorage.getItem("projects");
 
+    // if (savedProjects) {
+
+    //   return JSON.parse(savedProjects);
+
+    // }
     if (savedProjects) {
-
-      return JSON.parse(savedProjects);
-
+      const parsedProjects = JSON.parse(savedProjects);
+      return parsedProjects.map((project: any) => {
+        if (
+          project.customer === "ГК Росатом" &&
+          !project.customerLogo
+        ) {
+          return {
+            ...project,
+            customerLogo: customerLogo,
+          };
+        }
+        return project;
+      });
     }
 
     return initialProjects;
