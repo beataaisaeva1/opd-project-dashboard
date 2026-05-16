@@ -188,7 +188,7 @@ function LoadIndicator({
 
 }
 
-function Home({ projects }: any) {
+function Home({ projects,loads }: any) {
 
   const navigate = useNavigate();
 
@@ -230,9 +230,9 @@ function Home({ projects }: any) {
 
         <div className="header-indicators">
 
-          <LoadIndicator title="Загрузка сотрудников" value={85} />
+          <LoadIndicator title="Загрузка сотрудников" value={loads.employees} />
 
-          <LoadIndicator title="Загрузка вычислений" value={70} />
+          <LoadIndicator title="Загрузка вычислений" value={loads.computing} />
 
         </div>
 
@@ -553,7 +553,7 @@ function ProjectPage({ projects }: any) {
 
 }
 
-function AdminPage({ projects, setProjects }: any) {
+function AdminPage({ projects, setProjects, loads, setLoads}: any) {
 
   const [editingProject, setEditingProject] = useState<any | null>(null);
 
@@ -721,6 +721,36 @@ function AdminPage({ projects, setProjects }: any) {
             Добавить новый проект
 
           </button>
+        
+        <h3>Загрузка ресурсов</h3>
+        <div className="admin-form">
+          <label>Загрузка сотрудников, %</label>
+          <input
+          type="number"
+          min="0"
+          max="100"
+          value={loads.employees}
+          onChange={(e) =>
+            setLoads({
+              ...loads,
+              employees: Number(e.target.value),
+            })
+          }
+          />
+          <label>Загрузка вычислений, %</label>
+          <input
+          type="number"
+          min="0"
+          max="100"
+          value={loads.computing}
+          onChange={(e) =>
+            setLoads({
+              ...loads,
+              computing: Number(e.target.value),
+            })
+          }
+          />
+          </div>
 
           <h3>Проекты</h3>
 
@@ -811,6 +841,23 @@ function AdminPage({ projects, setProjects }: any) {
               />
 
               <label>Логотип заказчика</label>
+              {editingProject.customerLogo && (
+                <div className="admin-gallery-item">
+                  <img src={editingProject.customerLogo} alt="Логотип заказчика" />
+                  <button
+                  type="button"
+                  className="danger-button"
+                  onClick={() =>
+                    setEditingProject({
+                      ...editingProject,
+                      customerLogo: "",
+                    })
+                  }
+                  >
+                    Удалить логотип
+                    </button>
+                    </div>
+                  )}
 
               <input
 
@@ -926,11 +973,21 @@ function AdminPage({ projects, setProjects }: any) {
 
               <label>Основная фотография карточки</label>
               {editingProject.image && (
-                <img 
-                src={editingProject.image}
-                alt="Текущее фото"
-                className="admin-preview-image"
-                />
+                <div className="admin-gallery-item">
+                  <img src={editingProject.image} alt="Основная фотография" />
+                  <button
+                  type="button"
+                  className="danger-button"
+                  onClick={() =>
+                    setEditingProject({
+                      ...editingProject,
+                      image: "",
+                    })
+                  }
+                  >
+                    Удалить основную фотографию
+                    </button>
+                    </div>
                 )}
 
               <input
@@ -1111,6 +1168,21 @@ function App() {
 
   });
 
+  const [loads, setLoads] = useState(() => {
+    const savedLoads = localStorage.getItem("loads");
+    if (savedLoads) {
+      return JSON.parse(savedLoads);
+    }
+    return {
+      employees: 85,
+      computing: 70,
+    };
+  });
+  
+  useEffect(() => {
+    localStorage.setItem("loads", JSON.stringify(loads));
+  }, [loads]);
+
   useEffect(() => {
 
     localStorage.setItem("projects", JSON.stringify(projects));
@@ -1121,7 +1193,7 @@ function App() {
 
     <Routes>
 
-      <Route path="/" element={<Home projects={projects} />} />
+      <Route path="/" element={<Home projects={projects} loads={loads}/>} />
 
       <Route path="/project/:id" element={<ProjectPage projects={projects} />} />
 
@@ -1129,7 +1201,13 @@ function App() {
 
         path="/admin"
 
-        element={<AdminPage projects={projects} setProjects={setProjects} />}
+        element={<AdminPage 
+          projects={projects} 
+          setProjects={setProjects} 
+          loads={loads}
+          setLoads={setLoads}
+          />
+        }
 
       />
 
